@@ -8,6 +8,7 @@
 /config/settings/settings_secret_key.py
 /config/settings/dev_databases_postgresql.py
 /config/settings/devDocker_databases_postgresql.py
+/config/settings/prod_databases_postgresql.py
 /config/settings/dev_databases.py
 /config/settings/test_databases.py
 /config/settings/test_databases_postgresql.py
@@ -17,3 +18,4 @@
 
 
 /db.sqlite3
+**/__pycache__
