@@ -1,10 +1,10 @@
 import json
 from core.structures.properties.characteristics_in_space import CharacteristicsInSpace
 
-from core.models.vehicles.modelships import ModelShips
-from core.models.vehicles.modelships import ManagerShips
-from core.models.vehicles.modelShipLocation import ModelShipLocation
-from core.models.vehicles.modelShipLocation import ManagerShipLocation
+from core.models.vehicles.model_ships import ModelShips
+from core.models.vehicles.model_ships import ManagerShips
+from core.models.vehicles.model_ship_location import ModelShipLocation
+from core.models.vehicles.model_ship_location import ManagerShipLocation
 from core.structures.properties.locations import EarthPlace
 
 from datetime import datetime as lib_datetime, timezone as lib_timezone

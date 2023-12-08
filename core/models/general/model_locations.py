@@ -31,6 +31,9 @@ class Locations(models.Model):
     # ---------------------------------------------------------------------
     objects = LocationsManager()
 
+    class Meta:
+        db_table = "general_locations"
+
     @staticmethod
     def add(uuid: (lib_uuid, str) = None, description: str = None, **kwargs):
         new_location = Locations()

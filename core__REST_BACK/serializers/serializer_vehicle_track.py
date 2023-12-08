@@ -6,7 +6,7 @@ from core import models
 # class BalanceSubstancesSerializer(serializers.ModelSerializer):
 #
 #     class Meta:
-#         model = models.BalanceSubstances
+#         model = models.Substances
 #         fields = '__all__'
 
 
@@ -14,6 +14,8 @@ class ShipsOnMapItem(serializers.Serializer):
     # uuid = serializers.CharField(max_length=36)
     lat = serializers.FloatField()
     lon = serializers.FloatField()
+    type = serializers.IntegerField()
+    name = serializers.StringRelatedField()
     course = serializers.IntegerField()
     heading = serializers.IntegerField()
     speed = serializers.IntegerField()
@@ -40,14 +42,14 @@ class ShipTrackItem(serializers.Serializer):
 # class ShipTrack(serializers.Serializer):
 #     items = ShipTrackItem(many=True)
     # class Meta:
-    #     model = models.BalanceSubstances
+    #     model = models.Substances
     #     fields = '__all__'
 
 # class BalanceSubstancesSerializer(serializers.ModelSerializer):
 #     sub_descr = serializers.CharField(max_length=250)
 #
 #     class Meta:
-#         model = models.BalanceSubstances
+#         model = models.Substances
 #         fields = ('sub_descr')
 
 

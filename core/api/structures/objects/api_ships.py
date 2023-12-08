@@ -1,6 +1,6 @@
 import time
 
-from core.models.vehicles import modelships
+from core.models.vehicles import model_ships
 from core.structures.objects import obj_ship
 
 import time as lib_time

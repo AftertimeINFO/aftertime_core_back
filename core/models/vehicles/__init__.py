@@ -1,1 +1,1 @@
-from .modelShipLocation import *
+from .model_ship_location import *

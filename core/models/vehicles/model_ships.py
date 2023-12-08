@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models import signals
 from django.dispatch import receiver
 
-from ..zones import Zones
+from .zones import Zones
 
 class ManagerShips(models.Manager):
 
@@ -93,6 +93,9 @@ class ModelShips(models.Model):
     # moment_sync = models.DateTimeField(null=True)
     # ---------------------------------------------------------------------
     objects = ManagerShips()
+
+    class Meta:
+        db_table = "vehicles_ships"
 
     def update_cur_location(self, lat, lon, **kwargs):
         self.lat = lat

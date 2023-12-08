@@ -8,8 +8,8 @@ from django.db.models import signals
 from django.db.models import Avg, Count, Min, Sum, F
 from django.dispatch import receiver
 
-from .modelships import *
-from ..zones.zones import Zones
+from .model_ships import *
+from .zones.model_zones import Zones
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
@@ -151,6 +151,9 @@ class ModelShipLocation(models.Model):
     # moment_sync = models.DateTimeField(null=True)
     # ---------------------------------------------------------------------
     objects = ManagerShipLocation()
+
+    class Meta:
+        db_table = "vehicles_ships_locations"
 
     @staticmethod
     def create(entity: 'ObjShip'):

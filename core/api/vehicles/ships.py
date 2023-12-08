@@ -1,4 +1,4 @@
-from core.models import locations
+from core.models.general import model_locations
 
 
 def add(**kwargs):
@@ -8,14 +8,14 @@ def add(**kwargs):
         description: str
     :return:
     """
-    return locations.Locations.add(**kwargs)
+    return model_locations.Locations.add(**kwargs)
 
 class tt:
     pass
 
 def get_by_uuid(**kwargs):
-    return locations.Locations.objects.get_by_uuid(**kwargs)
+    return model_locations.Locations.objects.get_by_uuid(**kwargs)
 
 
 def get_all():
-    return locations.Locations.objects.get_all()
+    return model_locations.Locations.objects.get_all()

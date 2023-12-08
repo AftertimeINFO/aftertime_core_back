@@ -1,5 +1,5 @@
 from core.models.vehicles import ModelShips
-from core.models.balance_general import BalanceSubstancesTotal
+from core.models.balance.model_balance_general import BalanceSubstancesTotal
 from rest_framework import authentication, permissions, serializers, viewsets
 from rest_framework.permissions import AllowAny
 from core.api import balance_substances

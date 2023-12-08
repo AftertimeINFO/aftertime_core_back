@@ -12,9 +12,10 @@ from rest_framework import serializers as rf_serializers
 from .. import serializers
 # from .general import CustomPaginator
 from core.api import balance_substances
-from core.models.balance.balance_general import BalanceSubstancesTotal
-from core.models.balance.balance_general import BalanceSubstancesRelations
-from core.models.general.substances import Substances
+from core.models.balance.model_balance_general import BalanceSubstancesTotal
+from core.models.balance.model_balance_general import BalanceSubstancesRelationsTo
+from core.models.balance.model_balance_general import BalanceSubstancesRelationsFrom
+from core.models.general.model_substances import Substances
 
 
 class SubstanceSerializerTest(rf_serializers.ModelSerializer):
@@ -22,15 +23,45 @@ class SubstanceSerializerTest(rf_serializers.ModelSerializer):
         model = Substances
         fields = ['name', ]
 
-class TotalSerializer(rf_serializers.ModelSerializer):
+class SubstanceSerializer(rf_serializers.ModelSerializer):
+    model = Substances
+
     class Meta:
-        model = BalanceSubstancesRelations
+        model = Substances
+        fields = ['name', ]
+
+
+class SubstanceRelatedField(rf_serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        return super().get_queryset()
+
+class RelationToSerializer(rf_serializers.ModelSerializer):
+    # substance_from = rf_serializers.CharField()
+    # substance_to = SubstanceRelatedField(many=True, queryset=Substances.objects.all(), required=False)
+    substance_to = SubstanceSerializer(many=False,  read_only=True)
+
+    class Meta:
+        model = BalanceSubstancesRelationsFrom
+        fields = [ "id", "value", "value_to", "substance_to"]
+
+class RelationFromSerializer(rf_serializers.ModelSerializer):
+    class Meta:
+        model = BalanceSubstancesRelationsFrom
         fields = [ "id", "value" ]
+
+class BalanceSubstancesRelationsRelatedField(rf_serializers.PrimaryKeyRelatedField):
+    def get_queryset(self):
+        return super().get_queryset()
 
 
 class BalanceSubstancesSerializerItemTest(rf_serializers.ModelSerializer):
-    total = TotalSerializer(many=True, read_only=True)
+    total_to = RelationToSerializer(many=True, read_only=True)
+    # total_to = RelationToSerializer(many=True, read_only=True)
+    # total_from = RelationFromSerializer(many=True, read_only=True)
+    total_from = BalanceSubstancesRelationsRelatedField(many=True, queryset=BalanceSubstancesRelationsFrom.objects.all(), required=False)
     substance = SubstanceSerializerTest(many=False, read_only=True)
+    # substance__name = rf_serializers.CharField()
+
     # total = serializers.StringRelatedField(many=True)
     # substance = SubstanceSerializer(many=False, read_only=True)
     # substance = serializers.SlugRelatedField(many=True, read_only=True, slug_field='name')
@@ -42,7 +73,8 @@ class BalanceSubstancesSerializerItemTest(rf_serializers.ModelSerializer):
 
     class Meta:
         model = BalanceSubstancesTotal
-        fields = ['id', 'moment', 'initial_total', 'final_total', 'substance', 'total',]
+        # fields = ['id', 'moment', 'substance__name']
+        fields = ['id', 'moment', 'initial_total', 'final_total', 'substance', 'total_to', 'total_from',]
 
 
 
@@ -61,7 +93,10 @@ class BalanceListView(generics.GenericAPIView,
         # queryset = balance_substances.get_balances_by_substances()
         # queryset = balance_substances.substance_residues()
         # queryset = BalanceSubstancesTotal.objects.get_all()
+        # BalanceSubstancesTotal.objects.prefetch_related("substance")  select_related("BalanceSubstancesRelationsTo").all()
         queryset = BalanceSubstancesTotal.objects.all()
+        self.filterset_fields = ["id", ]
+        # queryset = BalanceSubstancesTotal.objects.prefetch_related("substance").values("id", "moment", "substance__name")
         # serializer_class = serializers.BalanceSubstancesSerializerItem
         serializer_class = BalanceSubstancesSerializerItemTest
 

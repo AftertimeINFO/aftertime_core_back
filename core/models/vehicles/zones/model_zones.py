@@ -14,6 +14,9 @@ class Zones(models.Model):
 
     objects = ZonesManager()
 
+    class Meta:
+        db_table = "vehicles_zones"
+
 
 class ZonePointsManager(models.Manager):
     pass
@@ -26,3 +29,6 @@ class ZonePoints(models.Model):
     lon = models.FloatField(blank=False, null=False)
 
     objects = ZonePointsManager()
+
+    class Meta:
+        db_table = "vehicles_zone_points"

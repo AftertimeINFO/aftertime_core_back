@@ -15,6 +15,8 @@ class ZoneIndex(models.Model):
 
     objects = ZoneIndexManager()
 
+    class Meta:
+        db_table = "vehicles_zone_index"
 
 class ZoneIndexZone(models.Manager):
     pass
@@ -27,7 +29,7 @@ class ZoneIndexZones(models.Model):
     objects = ZoneIndexZone()
 
     class Meta:
-        db_table = "vehicles_zone_index"
+        db_table = "vehicles_zone_index_zones"
 
 
 

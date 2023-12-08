@@ -1,6 +1,6 @@
 import datetime
 
-from core.models import balanceSubstances
+from core.models.balance import model_balance_general
 
 
 
@@ -11,19 +11,19 @@ def add(**kwargs):
         description: str
     :return:
     """
-    return balanceSubstances.BalanceSubstances.add(**kwargs)
+    return model_balance_general.Substances.add(**kwargs)
 
 
 def substance_residues(**kwargs):
-    return balanceSubstances.BalanceSubstances.objects.substance_residues(**kwargs)
+    return model_balance_general.Substances.objects.substance_residues(**kwargs)
 
 
 def get_balances_by_substances(**kwargs):
-    return balanceSubstances.BalanceSubstances.objects.get_balances_by_substances()
+    return model_balance_general.Substances.objects.get_balances_by_substances()
 
 
 def get_all(**kwargs):
-    return balanceSubstances.BalanceSubstances.objects.get_all()
+    return model_balance_general.Substances.objects.get_all()
 
 
 

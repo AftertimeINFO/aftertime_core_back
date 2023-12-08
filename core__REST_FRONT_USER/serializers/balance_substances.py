@@ -6,31 +6,39 @@ from core import models
 # class BalanceSubstancesSerializer(serializers.ModelSerializer):
 #
 #     class Meta:
-#         model = models.BalanceSubstances
+#         model = models.Substances
 #         fields = '__all__'
 
 class BalanceSubstancesSerializerItem(serializers.Serializer):
-    substance_name = serializers.CharField(max_length=250)
-    substance_description = serializers.CharField(max_length=250)
-    amount_start = serializers.CharField(max_length=250)
-    amount_end = serializers.CharField(max_length=250)
-    amount_current = serializers.CharField(max_length=250)
-    amount_difference = serializers.CharField(max_length=250)
-    amount_difference_per_sec = serializers.CharField(max_length=250)
-    current_moment = serializers.DateTimeField()
+    id = serializers.IntegerField()
+    moment = serializers.CharField()
+    substance__name = serializers.CharField()
+    initial_total = serializers.IntegerField()
+    final_total = serializers.IntegerField()
+
+    # "moment", "initial_total", "final_total", "substance__name"
+
+    # substance_name = serializers.CharField(max_length=250)
+    # substance_description = serializers.CharField(max_length=250)
+    # amount_start = serializers.CharField(max_length=250)
+    # amount_end = serializers.CharField(max_length=250)
+    # amount_current = serializers.CharField(max_length=250)
+    # amount_difference = serializers.CharField(max_length=250)
+    # amount_difference_per_sec = serializers.CharField(max_length=250)
+    # current_moment = serializers.DateTimeField()
 
 
 class BalanceSubstancesSerializer(serializers.Serializer):
     items = BalanceSubstancesSerializerItem(many=True)
     # class Meta:
-    #     model = models.BalanceSubstances
+    #     model = models.Substances
     #     fields = '__all__'
 
 # class BalanceSubstancesSerializer(serializers.ModelSerializer):
 #     sub_descr = serializers.CharField(max_length=250)
 #
 #     class Meta:
-#         model = models.BalanceSubstances
+#         model = models.Substances
 #         fields = ('sub_descr')
 
 

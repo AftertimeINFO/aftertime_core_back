@@ -7,9 +7,9 @@ from django.db import models
 from django.db.models import signals
 from django.db.models import Avg, Count, Min, Sum, F
 from django.dispatch import receiver
-from core.models.general.substances import *
+from core.models.general.model_substances import *
 # from .balance_substances import *
-from .balance_locations import *
+from core.models.general.model_locations import *
 
 
 class BalanceSubstancesTotalManager(models.Manager):
@@ -38,14 +38,28 @@ class BalanceProcess(models.Model):
     class Meta:
         db_table = "balance_process"
 
-class BalanceSubstancesRelations(models.Model):
+
+class BalanceSubstancesRelationsTo(models.Model):
     id = models.AutoField(primary_key=True)
-    total = models.ForeignKey(BalanceSubstancesTotal, related_name='total', on_delete=models.DO_NOTHING)
+    total = models.ForeignKey(BalanceSubstancesTotal, related_name='total_from', on_delete=models.DO_NOTHING)
     value = models.BigIntegerField()
     value_from = models.BigIntegerField()
-    substance_from = models.ForeignKey(Substances, on_delete=models.DO_NOTHING)
-    process = models.ForeignKey(BalanceProcess, on_delete=models.DO_NOTHING)
+    substance_from = models.ForeignKey(Substances, related_name='substance_from', on_delete=models.DO_NOTHING)
+    process_from = models.ForeignKey(BalanceProcess, related_name='process_to', on_delete=models.DO_NOTHING)
     # substance = models.ForeignKey(Substances, on_delete=models.DO_NOTHING)
 
     class Meta:
-        db_table = "balance_substances_relations"
+        db_table = "balance_substances_relations_to"
+
+
+class BalanceSubstancesRelationsFrom(models.Model):
+    id = models.AutoField(primary_key=True)
+    total_to = models.ForeignKey(BalanceSubstancesTotal, related_name='total_to', on_delete=models.DO_NOTHING)
+    value = models.BigIntegerField()
+    value_to = models.BigIntegerField()
+    substance_to = models.ForeignKey(Substances, related_name='substance_to', on_delete=models.DO_NOTHING)
+    process_from = models.ForeignKey(BalanceProcess, related_name='process_from', on_delete=models.DO_NOTHING)
+    # substance = models.ForeignKey(Substances, on_delete=models.DO_NOTHING)
+
+    class Meta:
+        db_table = "balance_substances_relations_from"

@@ -6,9 +6,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from core.api.structures.objects import api_ships
-from core.models.vehicles.modelships import ManagerShips
-from core.models.vehicles.modelShipLocation import ModelShipLocation
-from core.models.vehicles.modelShipLocation import ManagerShipLocation
+from core.models.vehicles.model_ships import ManagerShips
+from core.models.vehicles.model_ship_location import ModelShipLocation
+from core.models.vehicles.model_ship_location import ManagerShipLocation
 from core__REST_BACK import serializers
 
 import json as lib_json
@@ -91,12 +91,16 @@ class ShipTrack(generics.GenericAPIView,
         # ser = serializer_class(queryset, many=True)
         # return self.list(request, *args, **kwargs)
 
+from rest_framework.pagination import PageNumberPagination
+
+def customPagination(page_size):
+    return type("SubClass", (PageNumberPagination,), {"page_size": page_size})
 
 class ShipsOnMap(generics.GenericAPIView,
                  mixins.ListModelMixin, ):
     # permission_classes = [IsAuthenticated]
     permission_classes = (AllowAny,)
-
+    pagination_class = customPagination(1000)
     # pagination_class = CustomPaginator
     # queryset = balance_substances.get_all()
 
@@ -109,6 +113,8 @@ class ShipsOnMap(generics.GenericAPIView,
                 lon=float(request.query_params['c_lon']),
                 zoom=int(request.query_params['c_zoom']))
             self.serializer_class = serializers.ShipsOnMapItem
+
+
 
             return self.list(request, *args, **kwargs)
         else:
