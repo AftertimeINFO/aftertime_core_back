@@ -19,7 +19,8 @@ class SubstancesManager(models.Manager):
 
 
 class Substances(models.Model):
-    uuid = models.UUIDField(default=lib_uuid.uuid4, editable=False, primary_key=True)
+    id = models.AutoField(primary_key=True)
+    # uuid = models.UUIDField(default=lib_uuid.uuid4, editable=False, primary_key=True)
     # id_location = models.IntegerField(null=False)
     name = models.CharField(max_length=150, blank=False, null=False)
     description = models.CharField(max_length=250, blank=False, null=False)
@@ -30,6 +31,9 @@ class Substances(models.Model):
     # moment_sync = models.DateTimeField(null=True)
     # ---------------------------------------------------------------------
     objects = SubstancesManager()
+
+    class Meta:
+        db_table = "general_substances"
 
     @staticmethod
     def add(uuid: (lib_uuid, str) = None, description: str = None, name: str = None, **kwargs) -> object:

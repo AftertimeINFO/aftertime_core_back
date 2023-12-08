@@ -19,7 +19,8 @@ class LocationsManager(models.Manager):
 
 
 class Locations(models.Model):
-    uuid = models.UUIDField(default=lib_uuid.uuid4, editable=False, primary_key=True)
+    id = models.AutoField(primary_key=True)
+    # uuid = models.UUIDField(default=lib_uuid.uuid4, editable=False, primary_key=True)
     # id_location = models.IntegerField(null=False)
     description = models.CharField(max_length=250, blank=False, null=False)
 

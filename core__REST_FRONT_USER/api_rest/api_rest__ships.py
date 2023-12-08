@@ -8,7 +8,7 @@ class ShipsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ModelShips
-        fields = ("id", "name")
+        fields = ("id", "name", "type", "flag", "lat", "lon")
 
 
 class ShipsViewSet(viewsets.ReadOnlyModelViewSet):

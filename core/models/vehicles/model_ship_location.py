@@ -9,6 +9,7 @@ from django.db.models import Avg, Count, Min, Sum, F
 from django.dispatch import receiver
 
 from .modelships import *
+from ..zones.zones import Zones
 
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
@@ -132,6 +133,7 @@ class ModelShipLocation(models.Model):
     moment = models.DateTimeField(null=False)
     # ship = models.ForeignKey(ModelShips, verbose_name='uuid_ships', db_column='uuid_ships', to_field='uuid', on_delete=models.CASCADE)
     ship = models.ForeignKey(ModelShips, on_delete=models.CASCADE)
+    zone = models.ForeignKey(Zones, on_delete=models.DO_NOTHING, null=True)
 
     type_location = models.IntegerField(null=False)
     lat = models.FloatField(null=True)
@@ -192,7 +194,7 @@ class ModelShipLocation(models.Model):
         #     count: int,
         #     uuid: (lib_uuid, str) = None,
         #     **kwargs):
-        # new_element = BalanceSubstances()
+        # new_element = Substances()
         #
         # if uuid is not None:
         #     if isinstance(uuid, lib_uuid.UUID):

@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models import signals
 from django.dispatch import receiver
 
+from ..zones import Zones
 
 class ManagerShips(models.Manager):
 
@@ -34,18 +35,27 @@ class ManagerShips(models.Manager):
     def get_ships_on_map(lat: float, lon: float, zoom: int):
         mlat = 1
         mlon = 1
-        if zoom == 6:
-            mlat = 14
+        if zoom == 2:
+            mlat = 70
+            mlon = 160
+        elif zoom == 3:
+            mlat = 35
+            mlon = 80
+        elif zoom == 4:
+            mlat = 18
             mlon = 40
+        elif zoom == 5:
+            mlat = 9
+            mlon = 20
         elif zoom == 6:
-            mlat = 7
+            mlat = 16
             mlon = 20
         elif zoom == 7:
             mlat = 3.5
             mlon = 10
         elif zoom == 8:
-            mlat = 2
-            mlon = 5
+            mlat = 4
+            mlon = 8
         elif zoom == 9:
             mlat = 1
             mlon = 2.5
@@ -62,6 +72,7 @@ class ModelShips(models.Model):
     id = models.AutoField(primary_key=True)
     uuid = models.UUIDField(default=lib_uuid.uuid4, editable=False)
     id_mt = models.IntegerField(null=False)
+    zone = models.ForeignKey(Zones, on_delete=models.DO_NOTHING, null=True)
 
     name = models.CharField(max_length=250, blank=False, null=False)
     type = models.IntegerField(null=False)
